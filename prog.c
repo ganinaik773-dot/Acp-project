@@ -30,6 +30,36 @@ void displayPicture() {
     }
 }
 
+void setPixel(int x, int y) {
+    if (x >= 0 && x < width &&
+        y >= 0 && y < height) {
+        picture[y][x] = pixel;
+    }
+}
+
+void drawLine(int x1, int y1, int x2, int y2) {
+    int i;
+
+    if (y1 == y2) {   // horizontal line
+        for (i = x1; i <= x2; i++) {
+            setPixel(i, y1);
+        }
+    }
+    else if (x1 == x2) {   // vertical line
+        for (i = y1; i <= y2; i++) {
+            setPixel(x1, i);
+        }
+    }
+    
+}
+void drawRectangle(int x1, int y1, int x2, int y2) {
+    drawLine(x1, y1, x2, y1); // top
+    drawLine(x1, y2, x2, y2); // bottom
+    drawLine(x1, y1, x1, y2); // left
+    drawLine(x2, y1, x2, y2); // right
+}
+
+
 int main() {
     int choice;
 
@@ -64,5 +94,18 @@ int main() {
 
             drawLine(x1, y1, x2, y2);
         }
+        else if (choice == 2) {
+          int x1, y1, x2, y2;
+
+          printf("Enter top-left x y and bottom-right x y: ");
+          scanf("%d %d %d %d", &x1, &y1, &x2, &y2);
+
+          drawRectangle(x1, y1, x2, y2);
+        }
+         else if (choice == 5) {
+        printf("The picture is:\n");
+        displayPicture();
+        }  
             
     }
+}
