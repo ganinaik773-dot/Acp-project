@@ -67,10 +67,10 @@ void drawLine(int x1, int y1, int x2, int y2) {
     }
 }
 void drawRectangle(int x1, int y1, int x2, int y2) {
-    drawLine(x1, y1, x2, y1); // top
-    drawLine(x1, y2, x2, y2); // bottom
-    drawLine(x1, y1, x1, y2); // left
-    drawLine(x2, y1, x2, y2); // right
+    drawLine(x1, y1, x2, y1); 
+    drawLine(x1, y2, x2, y2); 
+    drawLine(x1, y1, x1, y2); 
+    drawLine(x2, y1, x2, y2); 
 }
 
 void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3) {
@@ -78,14 +78,31 @@ void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3) {
     drawLine(x2, y2, x3, y3);
     drawLine(x3, y3, x1, y1);
 }
+void drawCircle(int centerx, int centery, int radius)
+{
+    int x, y;
 
+    for (y = 0; y < height; y++) {
+        for (x = 0; x < width; x++) {
+
+            float dx = x - centerx;
+            float dy = (y - centery) * 2;
+
+            float distanceSquare = dx * dx + dy * dy;
+
+            if (distanceSquare >= radius * radius - radius &&
+                distanceSquare <= radius * radius + radius) {
+                setPixel(x, y);
+            }
+        }
+    }
+}
 
 int main() {
     int choice;
 
     clearPicture();
-    displayPicture();
-
+   
     printf("2D Graphics Editor\n");
     printf("Canvas size: %d x %d\n", width, height);
     printf("Use coordinates x y.\n");
@@ -114,6 +131,7 @@ int main() {
 
             drawLine(x1, y1, x2, y2);
         }
+
         else if (choice == 2) {
           int x1, y1, x2, y2;
 
@@ -122,6 +140,7 @@ int main() {
 
           drawRectangle(x1, y1, x2, y2);
         }
+
          
         else if (choice == 4) {
         int x1, y1, x2, y2, x3, y3;
@@ -132,13 +151,27 @@ int main() {
 
          drawTriangle(x1, y1, x2, y2, x3, y3);
         } 
+
+        else if (choice == 3) {
+         int cx, cy, radius;
+
+         printf("Enter center x y and radius: ");
+         scanf("%d %d %d", &cx, &cy, &radius);
+
+         drawCircle(cx, cy, radius);
+        }
+
         else if (choice == 5) {
         printf("The picture is:\n");
         displayPicture();
         } 
+
         else if (choice == 0) {
         printf("Exiting program.\n");
          break;
+        }
+        else {
+        printf("Invalid choice.\n");
         }
             
     }
