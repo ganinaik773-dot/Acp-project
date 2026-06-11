@@ -9,9 +9,12 @@
 #define PIXEL '*'
 #define MAX_OBJECTS 100
 
+
+
+
 char picture[HEIGHT][WIDTH];
 
-// Object types
+
 #define SHAPE_LINE      1
 #define SHAPE_RECT      2
 #define SHAPE_CIRCLE    3
@@ -19,23 +22,22 @@ char picture[HEIGHT][WIDTH];
 
 typedef struct {
     int type;
-    int params[6]; // x1,y1,x2,y2 or cx,cy,r or x1,y1,x2,y2,x3,y3
+    int params[6]; 
 } Shape;
 
 Shape objects[MAX_OBJECTS];
 int objectCount = 0;
 
-// ---- Drawing primitives ----
+
+void setPixel(int x, int y) {
+    if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
+        picture[y][x] = PIXEL;
+}
 
 void clearPicture() {
     for (int y = 0; y < HEIGHT; y++)
         for (int x = 0; x < WIDTH; x++)
             picture[y][x] = EMPTY;
-}
-
-void setPixel(int x, int y) {
-    if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
-        picture[y][x] = PIXEL;
 }
 
 void drawLine(int x1, int y1, int x2, int y2) {
@@ -51,14 +53,6 @@ void drawLine(int x1, int y1, int x2, int y2) {
         if (e2 <  dx) { err += dx; y1 += sy; }
     }
 }
-
-void drawRectangle(int x1, int y1, int x2, int y2) {
-    drawLine(x1, y1, x2, y1);
-    drawLine(x2, y1, x2, y2);
-    drawLine(x2, y2, x1, y2);
-    drawLine(x1, y2, x1, y1);
-}
-
 void drawCircle(int cx, int cy, int radius) {
     int x = 0, y = radius, d = 1 - radius;
     #define PLOT8(px, py) \
@@ -75,16 +69,25 @@ void drawCircle(int cx, int cy, int radius) {
     #undef PLOT8
 }
 
+
+void drawRectangle(int x1, int y1, int x2, int y2) {
+    drawLine(x1, y1, x2, y1);
+    drawLine(x2, y1, x2, y2);
+    drawLine(x2, y2, x1, y2);
+    drawLine(x1, y2, x1, y1);
+}
+
+
 void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3) {
     drawLine(x1, y1, x2, y2);
     drawLine(x2, y2, x3, y3);
     drawLine(x3, y3, x1, y1);
 }
 
-// ---- Render all objects onto canvas ----
-
 void renderAll() {
+
     clearPicture();
+
     for (int i = 0; i < objectCount; i++) {
         int *p = objects[i].params;
         switch (objects[i].type) {
@@ -97,7 +100,9 @@ void renderAll() {
 }
 
 void displayPicture() {
+
     renderAll();
+
     for (int y = 0; y < HEIGHT; y++) {
         for (int x = 0; x < WIDTH; x++)
             printf("%c", picture[y][x]);
@@ -105,7 +110,7 @@ void displayPicture() {
     }
 }
 
-// ---- Menu helpers ----
+
 
 void printMainMenu() {
     printf("2D Graphics Editor\n");
@@ -128,10 +133,12 @@ void printShapeMenu() {
     printf("Enter shape type: ");
 }
 
-// ---- Main ----
+
 
 int main() {
+
     int choice;
+
     clearPicture();
 
     while (1) {
@@ -139,7 +146,7 @@ int main() {
         scanf("%d", &choice);
 
         if (choice == 1) {
-            // Add object
+            
             int shapeType;
             printShapeMenu();
             scanf("%d", &shapeType);
@@ -178,6 +185,7 @@ int main() {
                 objectCount--;
                 printf("Object %d deleted.\n", idx);
             } else {
+
                 printf("Invalid index.\n");
             }
 
@@ -220,11 +228,11 @@ int main() {
             }
 
         } else if (choice == 4) {
-            // Display picture
+            
             displayPicture();
 
         } else if (choice == 5) {
-            // List objects
+            
             for (int i = 0; i < objectCount; i++) {
                 int *p = objects[i].params;
                 printf("Object %d: ", i);
@@ -241,9 +249,11 @@ int main() {
                 }
             }
 } else if (choice == 0) {
+
             printf("Goodbye.\n");
             break;
         } else {
+
             printf("Invalid choice.\n");
         }
     }
