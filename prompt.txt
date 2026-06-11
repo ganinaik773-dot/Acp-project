@@ -1,5 +1,10 @@
-Prompt 1Act as an expert C programmer. I want to build a simple, text-based 2D Graphics Editor using a character canvas ($80 \times 24$). Please set up the basic structures, defines, canvas array,
+Prompt 1:
+
+Act as an expert C programmer. I want to build a simple, text-based 2D Graphics Editor using a character canvas ($80 \times 24$). Please set up the basic structures, defines, canvas array,
  and the core rendering loop that can clear the canvas, set individual pixels, and display the final image using standard output.
+
+
+RESPONSE:
 
  #include <stdio.h>
 #include <stdlib.h>
@@ -43,6 +48,9 @@ Prompt 2
 Great. Now let's implement the rasterization drawing primitives. 
 Please provide the functions to draw lines (using Bresenham's algorithm),
  rectangles, circles (using Midpoint/Bresenham's circle algorithm), and triangles by connecting lines between three vertices.
+
+
+RESPONSE:
 
  void drawLine(int x1, int y1, int x2, int y2) {
     int dx = abs(x2-x1), dy = abs(y2-y1);
@@ -98,10 +106,15 @@ void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3) {
     drawLine(x3, y3, x1, y1);
 }
 
+
 Prompt 3
+
 Now write the master rendering functions. I need a function to clear
  the canvas and iterate through all stored shapes to draw them, along with a
   function to print the entire canvas buffer to the console terminal screen.
+
+
+RESPONSE:
 
   // ---- Render all objects onto canvas ----
 void renderAll() {
@@ -126,10 +139,14 @@ void displayPicture() {
     }
 }
 
+
 Prompt 4
 Create the helper menus for the interactive console interface. Give me a function for 
 the main menu options (Add, Delete, Modify, Display, List, Exit) and another helper function
  for selecting shape types.
+
+
+RESPONSE:
 
  // ---- Menu helpers ----
 void printMainMenu() {
@@ -153,11 +170,17 @@ void printShapeMenu() {
     printf("Enter shape type: ");
 }
 
+
+
 Prompt 5
 Let's tie everything together. Write the final main() function with a control loop 
 utilizing scanf to handle all user choices dynamically, allowing users to add shapes with
  distinct coordinate configurations, delete shapes by shifting the elements array, modify 
  parameters of existing items, and safely exit the editor loop.
+
+
+
+RESPONSE:
 
  // ---- Main ----
 int main() {
